@@ -1,0 +1,26 @@
+1) What is the size of your input layer and why?
+
+
+2) As you know, prior to feed the output of the second max-pooling layer to the first fully-connected
+layer, you have to “flatten” (that is, reshape) that output, which is a volume, so all of its elements are
+re-arranged into a vector. In your code, calculate the length of this vector as a function of the input
+size, kernel size, pooling size and number of feature maps. Store the result in a variable called
+“flattened_size” and use it to define the first fully-connected layer. What is the value of
+“flattened_size”? Report the snip of code that you wrote to calculate “flattened_size”.
+
+
+3) Plot the training and validation losses, as well as the training and validation accuracies, as a function
+of the training iteration. Once done, re-train your model from scratch by using Adam with default
+parameters (instead of stochastic gradient descent) as the optimizer and plot the same types of
+curves. Compare the results very briefly.
+
+
+4) What is the test accuracy from using stochastic gradient descent? And from using Adam?
+
+
+5) Calculate, by hand, the total number of parameters of the model, and indicate, step by step, how
+you reached your solution.
+
+
+6) Very briefly, compare, in terms of performance and computational complexity, this model with the
+feedforward neural network that you implemented in the previous assignment.

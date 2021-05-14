@@ -1,0 +1,38 @@
+1) What is the size of your input layer and why? What output layer activation function and training loss
+function have you chosen and why?
+
+Input size is calcualted as number of time frames * number of frequency bins which equals to
+4040. Dimensions of feature matrix are 101x40 where 101 is number of time frames and 40 is
+number of frequency bins. I have chosen to use ReLu activation functions in general  since they
+normally needs less time to train a network. Alternatively I tried ELU as well which yielded
+similar results. Output activation function is chosen based on criteria function
+which in my case is Cross Entropy Loss.
+
+2) Plot the training and validation losses, as well as the training and validation accuracies, as a function
+of the training iteration1. Do you think that overfitting has occurred? If your answer was yes, how
+may you solve it? (Just explain with words)
+
+The plots are under folder Assignment1/Plots.
+There is an indication of overfitting looking at loss plot. Around epoch 280 we can see that
+validation loss more or less flattens out where the training loss continues to decrease.
+In order to prevent overfitting random dropouts could be introduced. Another way to prevent
+overfitting is Early Stopping where we monitor validation loss and stop the training if validation
+loss does not improve.
+
+
+3) What is the test accuracy?
+
+Relu: Test accuracy is 86.4%
+Elu: Test accuracy is 84.7%
+
+4) Calculate, by hand, the total number of parameters of the model, and indicate, step by step, how
+you reached your solution.
+
+This is fully connected feed forward neural network therefore we have to multiply nodes of
+each layer with each other, sum the results up and add biases to every node.
+In our case we have an input layer(4040),3 hidden layers(128) and an output layer(3)
+therefore:
+(Input_n * hidden1) + (hidden1 * hidden2) + (hidden2 * hidden3) + (hidden3 * output) + (biases in every layer)
+(4040 * 128) + (128*128) + (128*128) + (128*128) + (128*3) + (128 + 128 + 128 +128 + 3)=567171
+which is the exactly the same number we can running:
+torchsummary.summary(model, (1,4040))

@@ -1,0 +1,13 @@
+1) Plot the training and validation losses, as well as the training and validation accuracies, as a function
+of the training iteration.
+
+
+2) What is the test accuracy?
+
+
+3) Calculate, by hand, the total number of parameters of the model, and indicate, step by step, how
+you reached your solution.
+
+
+4) Very briefly, compare, in terms of performance and computational complexity, this model with the
+models that you implemented in the previous assignments.
