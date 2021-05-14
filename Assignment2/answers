@@ -1,5 +1,8 @@
 1) What is the size of your input layer and why?
 
+I understood this problem as having 1-D images where image is actually a signal (freq,bins)
+therefore my input is [1,40,101] where 1 represents input channel size. Since we are training
+in batches my input to the model is [1024, 1,40,101].
 
 2) As you know, prior to feed the output of the second max-pooling layer to the first fully-connected
 layer, you have to “flatten” (that is, reshape) that output, which is a volume, so all of its elements are
@@ -8,19 +11,68 @@ size, kernel size, pooling size and number of feature maps. Store the result in 
 “flattened_size” and use it to define the first fully-connected layer. What is the value of
 “flattened_size”? Report the snip of code that you wrote to calculate “flattened_size”.
 
+We are dealing with input size 40x101 therefore we have to compute the flattening
+for both dimensions.
+
+the code that does that part is the following:
+
+    def flatten_size(self, width_or_height, kernel_size, pool_size, stride):
+        # first layer
+        a = width_or_height - kernel_size + stride
+        a = int(((a - pool_size)/pool_size) + stride)
+        # second layer
+        a = a - kernel_size + stride
+        a = int(((a - pool_size)/pool_size) + stride)
+        return a
+
+    flatten_by_width = self.flatten_size(40, kernel_size, pool_size, stride)
+    flatten_by_height = self.flatten_size(101, kernel_size, pool_size, stride)
+    self.flatten_size = conv2_size*flatten_by_width*flatten_by_height
+
+It is not generic so it only works with two convolutional layers.
+
 
 3) Plot the training and validation losses, as well as the training and validation accuracies, as a function
 of the training iteration. Once done, re-train your model from scratch by using Adam with default
 parameters (instead of stochastic gradient descent) as the optimizer and plot the same types of
 curves. Compare the results very briefly.
 
+Plots can be find under Assignment2/Plots
+
+Looking test accuracy we can see that both optimizers achieved similar results.
+However, looking at loss we can see that Adam with default parameters converged faster
+and we could stop the training in epoch 100 where the validation loss started increasing.
+Looking at SGD we can see that validation loss started flattening after epoch 200
+
 
 4) What is the test accuracy from using stochastic gradient descent? And from using Adam?
 
+Adam(default): 90.4%
+SGD: 90.56%
 
 5) Calculate, by hand, the total number of parameters of the model, and indicate, step by step, how
 you reached your solution.
 
+For the first convolutional layer we can compute number of parameters with following formula:
+((kernel_size_w * kernel_size_h *number_of_input_channels) + 1) * number_of_output_channels
+((5*5*1) + 1 )* 32 = 832
 
-6) Very briefly, compare, in terms of performance and computational complexity, this model with the
-feedforward neural network that you implemented in the previous assignment.
+For the second convolutional layer we have the same formula but we use output channels from
+previous convolutional neural network as input therefore:
+((5*5*32) + 1 ) *16 = 12816
+
+After we are finished with convolutional neural network we proceed with computation as
+feed forward neural network but taking into consideration about flattening the output :
+(Input_n * hidden1) + (hidden1 * output) + (biases in every layer)
+(2464*128) + (128*128) + (128*3) + (128 + 128+ 3) = 332419
+
+332419 + 12816 + 832 = 346067
+
+6) Very briefly, compare, in terms of performance and computational complexity, this
+model with the feedforward neural network that you implemented in the previous assignment.
+
+This model uses almost half of the parameters from the previous one but it more complex
+when it comes to understanding. Convolutional layers (and poolings) are used as
+feature extractors therefore we do not have to use as many parameters as in assignment1.
+Since we extracted the features first using CNN we are also getting better results
+when it comes to accuracy. 
