@@ -1,13 +1,29 @@
 1) Plot the training and validation losses, as well as the training and validation accuracies, as a function
 of the training iteration.
 
+Plots are under Assignment3/Plots
 
 2) What is the test accuracy?
 
+After 50 epochs the test accuracy is 75.1% but if increase the number of epochs to 100
+we can achieve accuracy of 88.8%
 
 3) Calculate, by hand, the total number of parameters of the model, and indicate, step by step, how
 you reached your solution.
 
+The fully connected NN can be calculated like before:
+    (273*128) + (128*128) + (128*3) + (128 + 128+ 3) = 51971
+
+Number of parameters in GRU can be computed using following formula:
+3*(n^2 + nm + n) where n is output size and m is input size.
+3×(64^2 + 101×64 + 64) = 31872
+
+51971 + 31872 = 83843 which is slightly higher then expected results of 82243
 
 4) Very briefly, compare, in terms of performance and computational complexity, this model with the
 models that you implemented in the previous assignments.
+
+RNN are more computationally and memory heavy compared to the CNN and Feed Forward NN.
+Running RNN only for 50 epochs yields accuracy of around 86% however if manage to train it
+for longer we might reach better results.
+RNN also require a lot of data to be trained efficiently.
