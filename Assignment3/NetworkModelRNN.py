@@ -23,7 +23,6 @@ class MyRNN(torch.nn.Module):
         x, hidden = self.rnn(x, h0)
         x, hidden = self.rnn2(x, hidden)
         x = x[:, -1, :]
-        print(x.shape)
         x = self.relu(self.fc1(x))
         x = self.relu(self.fc2(x))
         x = self.out(x)
