@@ -75,4 +75,4 @@ This model uses almost half of the parameters from the previous one but it more 
 when it comes to understanding. Convolutional layers (and poolings) are used as
 feature extractors therefore we do not have to use as many parameters as in assignment1.
 Since we extracted the features first using CNN we are also getting better results
-when it comes to accuracy. 
+when it comes to accuracy.
